@@ -14,6 +14,8 @@ The core competitive advantage is a **context-aware scanning and rules engine**:
 
 The long-term vision includes a proprietary **digital price tag system** purpose-built for TCG card displays, enabling automatic shelf-price updates as market values shift — a capability common in major retail (Best Buy, Walmart) that has never been applied to the trading card industry.
 
+> **Note on pricing data:** TCGPlayer's developer API program has been closed to new applicants following eBay's acquisition of TCGPlayer. ProjectTCG uses eBay's sold listings API as its primary pricing source — real completed transaction data across all supported games — supplemented by game-specific APIs (Scryfall for MTG, YGOPRODeck for Yu-Gi-Oh!, PokémonTCG.io for Pokemon).
+
 ---
 
 ## The Problem

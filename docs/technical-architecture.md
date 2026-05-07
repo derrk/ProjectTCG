@@ -37,6 +37,7 @@
 | Storage | Supabase Storage | Card images, exports, attachments |
 | Backend Logic | Supabase Edge Functions | Serverless TypeScript functions for pricing API calls and rules engine |
 | Real-time | Supabase Realtime | Live inventory sync across devices on the same store account |
+| Pricing | eBay Browse API + Scryfall + YGOPRODeck | TCGPlayer API closed to new developers; eBay sold listings are real transaction data |
 | Local DB (offline) | WatermelonDB (SQLite) | Purpose-built for React Native offline-first; syncs with Supabase |
 | Mobile Subscriptions | RevenueCat | Handles iOS App Store and Google Play billing complexity |
 | Web Subscriptions | Stripe | Used for web billing in Phase 2 |
@@ -638,44 +639,84 @@ All calculations use integer arithmetic (USD cents) to avoid floating-point roun
 
 ## 10. Pricing API Integration
 
+### Context: TCGPlayer API
+
+TCGPlayer was the original planned primary pricing source. Following eBay's acquisition of TCGPlayer in 2022, their developer API program has been closed to new applicants. As a result, the pricing architecture uses eBay's sold listings API as the primary source — which reflects real completed transactions rather than asking prices, and is arguably more accurate market data.
+
 ### Architecture
 
 Pricing API calls are made exclusively from Supabase Edge Functions, never from the client device. This keeps API keys server-side and allows rate limiting and caching at the server level.
 
-The client requests a price by calling the `fetch-price` Edge Function with a `card_id`. The function:
+The client requests a price by calling the `fetch-price` Edge Function with a `card_id` and `condition`. The function:
 1. Checks `PriceCache` — if a non-expired price exists, returns it immediately
-2. If expired or missing, calls the appropriate pricing API for that card's game
+2. If expired or missing, calls the appropriate pricing source for that card's game
 3. Stores the result in `PriceCache`
 4. Returns the price to the client
 
 Cache TTL per source:
-- TCGPlayer: 4 hours (prices update frequently)
-- Scryfall: 24 hours (prices update daily)
+- eBay sold listings: 6 hours (based on recent sales volume)
+- Scryfall: 24 hours (updates daily)
 - YGOPRODeck: 12 hours
 
 ### Pricing Sources by Game
 
-| Game | Primary source | Fallback |
-|---|---|---|
-| Pokemon TCG | TCGPlayer API | PokeData (community pricing) |
-| One Piece TCG | TCGPlayer API | CardTrader API |
-| Magic: The Gathering | Scryfall API | TCGPlayer API |
-| Yu-Gi-Oh! | TCGPlayer API | YGOPRODeck API |
+| Game | Card identification | Primary pricing | Fallback |
+|---|---|---|---|
+| Pokemon TCG | PokémonTCG.io | eBay sold listings | Cached last known price |
+| One Piece TCG | Internal database | eBay sold listings | Cached last known price |
+| Magic: The Gathering | Scryfall | Scryfall (includes TCGPlayer market data) + eBay | Cached last known price |
+| Yu-Gi-Oh! | YGOPRODeck | YGOPRODeck pricing + eBay | Cached last known price |
 
-### TCGPlayer API
+### eBay Browse API — Primary Pricing Source
 
-TCGPlayer requires a developer application for API access. Required before development of the pricing integration can be completed.
+The eBay Browse API is publicly available with a free developer account. It provides access to completed (sold) listings, which represent actual market transactions.
 
-- **Developer portal:** developer.tcgplayer.com
-- **Data needed:** Product catalog (card identification) and Market Price endpoints
-- **Rate limits:** Managed by the Edge Function caching layer to avoid hitting limits
+**How pricing is derived:**
+1. Construct a search query from card metadata: `"{card name} {set} {card number} {condition}"`
+2. Filter to completed/sold listings only
+3. Collect the last 10–20 sold prices
+4. Calculate: low, median, and market average
+5. Store all three in `PriceCache` alongside the raw sale count for confidence scoring
+
+**Confidence scoring:**
+Cards with fewer than 5 recent sold listings are flagged as low-confidence prices. The UI surfaces this to the user so they can verify manually before making a high-value offer.
+
+**Developer setup:**
+- Create a free account at developer.ebay.com
+- Register an application to receive API credentials
+- Use the Browse API `search` endpoint with `buyingOptions: AUCTION,FIXED_PRICE` and `completedItems: true`
+
+### Scryfall (MTG)
+
+Scryfall's free API includes MTG card data and regularly updated pricing sourced from multiple markets. No API key is required for standard usage.
+
+- Card identification: set code + collector number
+- Pricing fields: `usd`, `usd_foil`, `usd_etched` (near mint market price)
+- Updates: daily
+
+### YGOPRODeck (Yu-Gi-Oh!)
+
+YGOPRODeck provides free card data and pricing for Yu-Gi-Oh!. No API key required.
+
+- Card identification: card name or card ID
+- Pricing: TCGPlayer market price is included in card data responses
+- Updates: daily
+
+### One Piece TCG — Card Database
+
+One Piece TCG has less mature API infrastructure than other supported games. The card identification database will be:
+- Sourced from the official One Piece TCG website and community databases at launch
+- Maintained in the ProjectTCG database and updated manually when new sets release
+- Supplemented by community open-source projects where available
+
+Pricing for One Piece is handled entirely by eBay sold listings.
 
 ### Graceful Degradation
 
-If a pricing API is unavailable or rate-limited:
-1. Return the most recent cached price with a staleness warning
-2. If no cached price exists, return `null` — the UI shows "Price unavailable" and allows manual entry
-3. Never block a scan session due to a pricing failure
+If a pricing source is unavailable or rate-limited:
+1. Return the most recent cached price with a staleness warning and the cache age
+2. If no cached price exists, return `null` — the UI shows "Price unavailable" and allows manual price entry
+3. Never block a scan session due to a pricing failure — a transaction can always proceed with a manually entered price
 
 ---
 
@@ -781,10 +822,10 @@ On merge to `main`:
 | Expo EAS | Mobile builds and OTA updates | Free tier → $99/mo Production |
 | RevenueCat | Mobile subscription management | Free up to $2,500 MRR |
 | Stripe | Web subscription billing (Phase 2) | 2.9% + $0.30 per transaction |
-| TCGPlayer API | Card pricing (all supported games) | Developer application required |
+| eBay Browse API | Primary pricing source (all games via sold listings) | Free developer account at developer.ebay.com |
 | Scryfall API | MTG card data and pricing | Free, no key required |
-| YGOPRODeck API | Yu-Gi-Oh card data | Free, no key required |
-| Pokemon TCG API | Pokemon card data | Free tier available |
+| YGOPRODeck API | Yu-Gi-Oh card data and pricing | Free, no key required |
+| PokémonTCG.io API | Pokemon card identification data | Free, no key required for basic access |
 | Google ML Kit | On-device OCR for card scanning | Free (on-device, no API calls) |
 
 ### API Keys Management
