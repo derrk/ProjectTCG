@@ -1,4 +1,4 @@
-# Market Analysis — TCG Shop Tracker
+# Market Analysis — ProjectTCG
 
 **Version:** 0.1
 **Last Updated:** May 2026
@@ -66,7 +66,7 @@ The de facto "tool" for most independent operators. Free, flexible, and familiar
 
 | | Price lookup | Inventory mgmt | Transaction modes | Rules engine | Multi-user | Offline | Digital tags |
 |---|---|---|---|---|---|---|---|
-| **TCG Shop Tracker** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ *(Phase 4)* |
+| **ProjectTCG** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ *(Phase 4)* |
 | Rare Candy | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 | Collectr | ✅ | ✅ | ❌ | ❌ | ❌ | Partial | ❌ |
 | TCGPlayer Pro | ✅ | Partial | ❌ | ❌ | Partial | ❌ | ❌ |

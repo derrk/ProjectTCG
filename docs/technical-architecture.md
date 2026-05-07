@@ -1,4 +1,4 @@
-# Technical Architecture — TCG Shop Tracker
+# Technical Architecture — ProjectTCG
 
 **Version:** 0.1 — Draft
 **Last Updated:** May 2026
@@ -8,7 +8,7 @@
 
 ## Overview
 
-This document will capture all technical decisions for the TCG Shop Tracker platform — tech stack selection, system architecture, data models, API design, and infrastructure choices.
+This document will capture all technical decisions for the ProjectTCG platform — tech stack selection, system architecture, data models, API design, and infrastructure choices.
 
 Architecture decisions will be made with the following priorities:
 

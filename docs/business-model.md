@@ -1,4 +1,4 @@
-# Business Model — TCG Shop Tracker
+# Business Model — ProjectTCG
 
 **Version:** 0.1
 **Last Updated:** May 2026
@@ -7,7 +7,7 @@
 
 ## Revenue Model
 
-TCG Shop Tracker operates on a **subscription SaaS model** with monthly and annual billing options. Annual billing is offered at a discount to improve cash flow predictability and reduce churn.
+ProjectTCG operates on a **subscription SaaS model** with monthly and annual billing options. Annual billing is offered at a discount to improve cash flow predictability and reduce churn.
 
 A hardware revenue stream is introduced in Phase 4 with the digital price tag system.
 

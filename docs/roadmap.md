@@ -1,4 +1,4 @@
-# Product Roadmap — TCG Shop Tracker
+# Product Roadmap — ProjectTCG
 
 **Version:** 0.1
 **Last Updated:** May 2026
@@ -177,7 +177,7 @@ To become the operating system for trading card businesses — the single platfo
 
 ## Phase 3 — Platform Integrations
 
-**Goal:** Make TCG Shop Tracker the inventory hub that pushes to every sales channel.
+**Goal:** Make ProjectTCG the inventory hub that pushes to every sales channel.
 
 **New capabilities:**
 - **TCGPlayer Sync** — push inventory to TCGPlayer store, sync sold quantities back

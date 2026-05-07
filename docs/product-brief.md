@@ -1,6 +1,4 @@
-# Product Brief — TCG Shop Tracker
-
-> **Working title** — pending final branding
+# Product Brief — ProjectTCG
 
 **Status:** Pre-Development
 **Version:** 0.1
@@ -10,7 +8,7 @@
 
 ## Executive Summary
 
-TCG Shop Tracker is a multi-platform SaaS solution for trading card game (TCG) retailers, vendors, and resellers. The platform consolidates inventory management, live market pricing, smart transaction workflows, and customer management into a single purpose-built tool — replacing the notebooks, spreadsheets, and fragmented apps that define the current state of the industry.
+ProjectTCG is a multi-platform SaaS solution for trading card game (TCG) retailers, vendors, and resellers. The platform consolidates inventory management, live market pricing, smart transaction workflows, and customer management into a single purpose-built tool — replacing the notebooks, spreadsheets, and fragmented apps that define the current state of the industry.
 
 The core competitive advantage is a **context-aware scanning and rules engine**: operators scan cards in different modes (trade-in, buylist, retail pricing) and the platform automatically applies configurable business rules — such as offering 80% of market value for cards above $10 — delivering instant, accurate offers without manual calculation.
 
@@ -36,7 +34,7 @@ The trading card industry has experienced significant growth in recent years, dr
 
 ## The Solution
 
-TCG Shop Tracker provides a unified platform built around the way card shops actually operate:
+ProjectTCG provides a unified platform built around the way card shops actually operate:
 
 ### Core Capabilities
 
@@ -68,7 +66,7 @@ Serialized e-ink display tags assigned to physical card slots. Tags show the cur
 
 ## Key Differentiators
 
-| Capability | TCG Shop Tracker | Rare Candy | Collectr | Spreadsheets |
+| Capability | ProjectTCG | Rare Candy | Collectr | Spreadsheets |
 |---|---|---|---|---|
 | Multi-game support | ✅ All major TCGs | Partial | ✅ | Manual |
 | Transaction modes with rules engine | ✅ | ❌ | ❌ | Manual |

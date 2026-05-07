@@ -1,6 +1,4 @@
-# TCG Shop Tracker
-
-> **Working title** — pending final branding
+# ProjectTCG
 
 A multi-platform SaaS system for trading card game shop owners, vendors, and resellers to manage inventory, streamline buying and trading workflows, and make data-driven pricing decisions using live market data.
 
@@ -8,7 +6,7 @@ A multi-platform SaaS system for trading card game shop owners, vendors, and res
 
 ## What It Is
 
-TCG Shop Tracker fills a significant gap in the trading card industry: a purpose-built operational platform that replaces the notebooks, spreadsheets, and fragmented apps most shop owners rely on today.
+ProjectTCG fills a significant gap in the trading card industry: a purpose-built operational platform that replaces the notebooks, spreadsheets, and fragmented apps most shop owners rely on today.
 
 The platform covers the full business lifecycle — scanning and valuing incoming cards, managing inventory at scale, processing trade-ins and buylists with configurable rules, tracking customer store credit, and (in a later phase) automating shelf pricing through a proprietary digital price tag system.
 

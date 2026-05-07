@@ -1,4 +1,4 @@
-# Product Requirements Document — TCG Shop Tracker
+# Product Requirements Document — ProjectTCG
 
 **Version:** 0.1
 **Last Updated:** May 2026
@@ -8,7 +8,7 @@
 
 ## Overview
 
-This document defines the complete feature requirements for Phase 1 of TCG Shop Tracker. It covers user roles, functional requirements, user stories, and acceptance criteria for every feature in the initial mobile app release.
+This document defines the complete feature requirements for Phase 1 of ProjectTCG. It covers user roles, functional requirements, user stories, and acceptance criteria for every feature in the initial mobile app release.
 
 ---
 
